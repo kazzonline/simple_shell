@@ -11,10 +11,6 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <signal.h>
-
-#define END_OF_FILE -2
-#define EXIT -3
 
 /* for read/write buffers */
 #define READ_BUF_SIZE 1024
@@ -39,8 +35,6 @@
 #define HIST_MAX	4096
 
 extern char **environ;
-char *name;
-int hist
 
 
 /**
@@ -57,26 +51,26 @@ typedef struct liststr
 } list_t;
 
 /**
- * struct passinfo - contains pseudo-arguements to pass into a function,
- * allowing uniform prototype for function pointer struct
- * @arg: a string generated from getline containing arguements
- * @argv: an array of strings generated from arg
- * @path: a string path for the current command
- * @argc: the argument count
- * @line_count: the error count
- * @err_num: the error code for exit()s
- * @linecount_flag: if on count this line of input
- * @fname: the program filename
- * @env: linked list local copy of environ
- * @environ: custom modified copy of environ from LL env
- * @history: the history node
- * @alias: the alias node
- * @env_changed: on if environ was changed
- * @status: the return status of the last exec'd command
- * @cmd_buf: address of pointer to cmd_buf, on if chaining
- * @cmd_buf_type: CMD_type ||, &&, ;
- * @readfd: the fd from which to read line input
- * @histcount: the history line number count
+ *struct passinfo - contains pseudo-arguements to pass into a function,
+ *		allowing uniform prototype for function pointer struct
+ *@arg: a string generated from getline containing arguements
+ *@argv: an array of strings generated from arg
+ *@path: a string path for the current command
+ *@argc: the argument count
+ *@line_count: the error count
+ *@err_num: the error code for exit()s
+ *@linecount_flag: if on count this line of input
+ *@fname: the program filename
+ *@env: linked list local copy of environ
+ *@environ: custom modified copy of environ from LL env
+ *@history: the history node
+ *@alias: the alias node
+ *@env_changed: on if environ was changed
+ *@status: the return status of the last exec'd command
+ *@cmd_buf: address of pointer to cmd_buf, on if chaining
+ *@cmd_buf_type: CMD_type ||, &&, ;
+ *@readfd: the fd from which to read line input
+ *@histcount: the history line number count
  */
 typedef struct passinfo
 {
@@ -106,9 +100,9 @@ typedef struct passinfo
 	0, 0, 0}
 
 /**
- * struct builtin - contains a builtin string and related function
- * @type: the builtin command flag
- * @func: the function
+ *struct builtin - contains a builtin string and related function
+ *@type: the builtin command flag
+ *@func: the function
  */
 typedef struct builtin
 {
@@ -116,44 +110,6 @@ typedef struct builtin
 	int (*func)(info_t *);
 } builtin_table;
 
-/**
- * struct alias_s - A new struct defining aliases.
- * @name: The name of the alias.
- * @value: The value of the alias.
- * @next: A pointer to another struct alias_s.
- */
-
-/**
- * struct list_s - A new struct type defining a linked list.
- * @dir: A directory path.
- * @next: A pointer to another struct list_s.
- */
-typedef struct list_s
-{
-	char *dir;
-	struct list_s *next;
-} list_t;
-
-/**
- * struct builtin_s - A new struct type defining builtin commands.
- * @name: The name of the builtin command.
- * @f: A function pointer to the builtin command's function.
- */
-typedef struct builtin_s
-{
-	char *name;
-	int (*f)(char **argv, char **front);
-} builtin_t;
-
-typedef struct alias_s
-{
-	char *name;
-	char *value;
-	struct alias_s *next;
-} alias_t;
-
-/* Global aliases linked list */
-alias_t *aliases;
 
 /* toem_shloop.c */
 int hsh(info_t *, char **);

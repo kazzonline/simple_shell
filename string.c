@@ -1,85 +1,75 @@
 #include "shell.h"
 
 /**
- * _strlen - Retur the length of a srting.
- * @s: A pointer to the character string.
+ * _strlen - returns the length of a string
+ * @s: the string whose length to check
  *
- * Return: the lenght of the charcter dtring.
+ * Return: integer length of string
  */
-
-int _strlen(const char *s)
+int _strlen(char *s)
 {
-	int lenght = 0;
+	int i = 0;
 
 	if (!s)
-		return (lenght);
-	for (lenght = 0; s[lenght]; lenght++)
-		;
-	return (lenght);
+		return (0);
+
+	while (*s++)
+		i++;
+	return (i);
 }
 
 /**
- * _strcpy - Copies the string pointed to bt src, including the
- * terminating NULL byte, to the buffer pointed by dest.
- * @dest: Pointer to the destination of pointed string.
- * @src: pointer to the src of the source string.
+ * _strcmp - performs lexicogarphic comparison of two strangs.
+ * @s1: the first strang
+ * @s2: the second strang
  *
- * Return: Pointer to dest.
+ * Return: negative if s1 < s2, positive if s1 > s2, zero if s1 == s2
  */
-
-char *_strcpy(char *dest, const char *src)
+int _strcmp(char *s1, char *s2)
 {
-	size_t i;
-
-	for (i = 0; src[i] != '\0'; i++)
-		dest[i] = src[i];
-	dest[i] = '\0';
-	return (dest);
+	while (*s1 && *s2)
+	{
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		s1++;
+		s2++;
+	}
+	if (*s1 == *s2)
+		return (0);
+	else
+		return (*s1 < *s2 ? -1 : 1);
 }
 
 /**
- * _strcat - Concatenates two sring/
- * @dest: pionter to destination string.
- * @src: Pointer to source string.
+ * starts_with - checks if needle starts with haystack
+ * @haystack: string to search
+ * @needle: the substring to find
  *
- * Return: ponter to destination string.
+ * Return: address of next char of haystack or NULL
  */
-
-char *_strcat(char *dest, const char *src)
+char *starts_with(const char *haystack, const char *needle)
 {
-	char *destTemp;
-	const char *srcTemp;
-
-	destTemp = dest;
-	srcTemp = src;
-
-	while (*destTemp != '\0')
-		destTemp++;
-
-	while (*srcTemp != '\0')
-		*destTemp++ = *srcTemp++;
-	*destTemp = '\0';
-	return (dest);
+	while (*needle)
+		if (*needle++ != *haystack++)
+			return (NULL);
+	return ((char *)haystack);
 }
 
 /**
- * _strncat - Concatenates two string where n number.
- * or bytes are copy from surce.
- * @dest: pointer to destination string.
- * @src: pointer to surce string
- * @n: n bytes to copy from src.
+ * _strcat - concatenates two strings
+ * @dest: the destination buffer
+ * @src: the source buffer
  *
- * Return: Pointer to to destination string.
+ * Return: pointer to destination buffer
  */
-
-char *_strncat(char *dest, const char *src, size_t n)
+char *_strcat(char *dest, char *src)
 {
-	size_t dest_len = _strlen(dest);
-	size_t i;
+	char *ret = dest;
 
-	for (i = 0; i < n && src[i] != '\0'; i++)
-		dest[dest_len + i] = src[i];
-	dest[dest_len + i] = '\0';
-
-	return (dest);
+	while (*dest)
+		dest++;
+	while (*src)
+		*dest++ = *src++;
+	*dest = *src;
+	return (ret);
 }
