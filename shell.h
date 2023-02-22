@@ -11,6 +11,10 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <signal.h>
+
+#define END_OF_FILE -2
+#define EXIT -3
 
 /* for read/write buffers */
 #define READ_BUF_SIZE 1024
@@ -35,6 +39,8 @@
 #define HIST_MAX	4096
 
 extern char **environ;
+char *name;
+int hist
 
 
 /**
@@ -110,6 +116,44 @@ typedef struct builtin
 	int (*func)(info_t *);
 } builtin_table;
 
+/**
+ * struct alias_s - A new struct defining aliases.
+ * @name: The name of the alias.
+ * @value: The value of the alias.
+ * @next: A pointer to another struct alias_s.
+ */
+
+/**
+ * struct list_s - A new struct type defining a linked list.
+ * @dir: A directory path.
+ * @next: A pointer to another struct list_s.
+ */
+typedef struct list_s
+{
+	char *dir;
+	struct list_s *next;
+} list_t;
+
+/**
+ * struct builtin_s - A new struct type defining builtin commands.
+ * @name: The name of the builtin command.
+ * @f: A function pointer to the builtin command's function.
+ */
+typedef struct builtin_s
+{
+	char *name;
+	int (*f)(char **argv, char **front);
+} builtin_t;
+
+typedef struct alias_s
+{
+	char *name;
+	char *value;
+	struct alias_s *next;
+} alias_t;
+
+/* Global aliases linked list */
+alias_t *aliases;
 
 /* toem_shloop.c */
 int hsh(info_t *, char **);
